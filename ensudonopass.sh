@@ -123,7 +123,7 @@ check_existing_sudoers() {
     progress_bar 50
     echo ""  
     echo "Checking system sudoers file..."
-    if sudo grep -q "^$SELECTED_USER ALL=(ALL) NOPASSWD: ALL" /etc/sudoers; then
+    if sudo grep -q "^$SELECTED_USER ALL=(ALL) NOPASSWD:ALL" /etc/sudoers; then
         echo -e "User \e[1;35m$SELECTED_USER\e[0m is \e[1;37m\e[4malready configured\e[0m in /etc/sudoers."
         echo -e "\e[32m\033[1mNo changes made.\033[0m"  # Green + Bold for positive message
         exit 0
@@ -131,7 +131,7 @@ check_existing_sudoers() {
 
     echo "Checking /etc/sudoers.d/ directory..."
     for FILE in /etc/sudoers.d/*; do
-        if sudo grep -q "^$SELECTED_USER ALL=(ALL) NOPASSWD: ALL" "$FILE"; then
+        if sudo grep -q "^$SELECTED_USER ALL=(ALL) NOPASSWD:ALL" "$FILE"; then
             echo -e "User \e[1;35m$SELECTED_USER\e[0m is \e[1;37m\e[4malready configured\e[0m in $FILE."
             echo -e "\e[32m\033[1mNo changes made.\033[0m"
             exit 0
@@ -148,7 +148,7 @@ configure_sudo() {
     SUDOERS_FILE="/etc/sudoers.d/admin"
 
     echo "Creating or updating sudoers file..."
-    echo "$SELECTED_USER ALL=(ALL) NOPASSWD: ALL" | sudo tee -a "$SUDOERS_FILE" > /dev/null
+    echo "$SELECTED_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a "$SUDOERS_FILE" > /dev/null
 
     echo "Setting correct file permissions..."
     sudo chmod 440 "$SUDOERS_FILE"
